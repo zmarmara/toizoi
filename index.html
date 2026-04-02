@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toi Zoi | The Collectible Universe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink: #ffb7ce;
+            --hot-pink: #ff69b4;
+            --lavender: #e6e6fa;
+            --sky: #87ceeb;
+            --mint: #b2fba5;
+            --peach: #ffccb3;
+            --lemon: #fff44f;
+            --rainbow: linear-gradient(90deg, #ffb7ce, #e6e6fa, #87ceeb, #b2fba5, #fff44f, #ffb7ce);
+            --gloss: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.25) 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #fff;
+            color: #333;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill:pink"><circle cx="12" cy="12" r="10"/></svg>'), auto;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        @keyframes rainbow-border {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid;
+            border-image: var(--rainbow) 1;
+        }
+
+        .logo img {
+            height: 45px;
+            transition: transform 0.3s;
+            display: block;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover {
+            color: var(--hot-pink);
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 100px 20px 60px;
+            background: radial-gradient(circle, #fff 0%, var(--lavender) 100%);
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 15vw, 9rem);
+            line-height: 0.8;
+            margin-bottom: 20px;
+            z-index: 2;
+        }
+
+        .hero .rainbow-text {
+            background: var(--rainbow);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-border 3s linear infinite;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            margin-bottom: 18px;
+            z-index: 2;
+        }
+
+        .hero p {
+            max-width: 600px;
+            font-size: 1.2rem;
+            color: #555;
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .hero-quote {
+            margin-top: 40px;
+            font-weight: bold;
+            background: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 2px solid #000;
+            z-index: 2;
+            font-size: 1.1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .sparkle-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            width: 20px;
+            height: 20px;
+            animation: sparkle 3s infinite ease-in-out;
+        }
+
+        .section-padding {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 30px;
+            padding: 15px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 10px 10px 0px var(--pink);
+            border: 2px solid #eee;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotate(1deg);
+            box-shadow: 15px 15px 0px var(--hot-pink);
+        }
+
+        .image-box {
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            background: #f9f9f9;
+            cursor: zoom-in;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gloss);
+            pointer-events: none;
+            opacity: 0.72;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover .image-box::after {
+            opacity: 1;
+        }
+
+        .sticker {
+            position: absolute;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .sticker-round {
+            top: 12px;
+            right: 12px;
+            background: var(--lemon);
+            transform: rotate(15deg);
+        }
+
+        .sticker-badge {
+            bottom: 15px;
+            left: 15px;
+            background: var(--mint);
+            transform: rotate(-5deg);
+        }
+
+        .card-info {
+            padding: 25px 10px 15px;
+        }
+
+        .card-info h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--hot-pink);
+        }
+
+        .card-info p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-main {
+            background: #000;
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-main:hover {
+            background: var(--hot-pink);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: var(--lemon);
+            color: #000;
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+        }
+
+        .creator-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 60px;
+            align-items: center;
+            background: #fff;
+            border-radius: 40px;
+            padding: 40px;
+            border: 10px solid var(--lavender);
+        }
+
+        .creator-img-container {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .creator-img-container img {
+            width: 100%;
+            border-radius: 25px;
+            filter: drop-shadow(10px 10px 0 var(--sky));
+            display: block;
+        }
+
+        .creator-text {
+            flex: 1.5;
+            min-width: 300px;
+        }
+
+        .creator-text h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .creator-text p {
+            line-height: 1.7;
+        }
+
+        .manifesto-box {
+            background: var(--peach);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 30px;
+            border-left: 10px solid var(--hot-pink);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 183, 206, 0.9);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 80vh;
+            border: 15px solid white;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .fun-club {
+            background: var(--rainbow);
+            background-size: 400% 400%;
+            animation: rainbow-border 10s ease infinite;
+            text-align: center;
+            border-radius: 40px;
+            padding: 100px 20px;
+            margin-top: 50px;
+        }
+
+        .fun-club-card {
+            background: white;
+            padding: 60px;
+            border-radius: 30px;
+            display: inline-block;
+            max-width: 600px;
+            box-shadow: 20px 20px 0px rgba(0,0,0,1);
+        }
+
+        .fun-club-card h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .fun-club-card p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: #fefefe;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .footer-sub {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 10px 20px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px 16px;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-top: 120px;
+            }
+
+            .section-title {
+                font-size: 2.4rem;
+            }
+
+            .creator-wrap {
+                padding: 24px;
+                gap: 30px;
+            }
+
+            .creator-text h2 {
+                font-size: 2.3rem;
+            }
+
+            .fun-club-card {
+                padding: 35px 24px;
+                box-shadow: 10px 10px 0px rgba(0,0,0,1);
+            }
+
+            .fun-club-card h2 {
+                font-size: 2.4rem;
+            }
+
+            .image-box {
+                height: 360px;
+            }
+
+            .close {
+                top: 18px;
+                right: 22px;
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <img src="toi boi logo white.png" alt="Toi Zoi Logo">
+        </div>
+        <div class="nav-links">
+            <a href="#home">Toi Zoi</a>
+            <a href="#collection">Collection</a>
+            <a href="#creator">The Creator</a>
+            <a href="#club">Fun Club</a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="sparkle-bg" id="sparkle-container"></div>
+        <h1 class="rainbow-text">Toi Zoi</h1>
+        <h2>Collectible Companionship</h2>
+        <p>A pop-art universe for grown-ups. Exploring identity, age, and queer companionship through a glossy, imaginative lens.</p>
+
+        <div class="hero-actions">
+            <a href="#collection" class="btn btn-main">Explore Collection</a>
+            <a href="#club" class="btn btn-secondary">Join Fun Club</a>
+        </div>
+
+        <div class="hero-quote">
+            “There is a Toi Zoi for you.”
+        </div>
+    </section>
+
+    <section id="collection" class="section-padding">
+        <h2 class="section-title">The Collection</h2>
+        <p class="section-subtitle">Click any item to "unbox" the detail.</p>
+
+        <div class="grid" id="main-grid"></div>
+    </section>
+
+    <section id="creator" class="section-padding">
+        <div class="creator-wrap">
+
+            <div class="creator-img-container">
+                <img src="thecreator.png" alt="Zoi Marmara">
+                <div class="sticker sticker-round" style="top: 20px; left: -20px; right: auto; background: var(--hot-pink); color: white;">
+                    Creator
+                </div>
+            </div>
+
+            <div class="creator-text">
+                <h2>Zoi Marmara</h2>
+
+                <p>
+                    Zoi comes from web design and motion graphics, and her broader work lives under <a href="https://anchored.gr" target="_blank" rel="noopener noreferrer">Anchored</a> — a space exploring presence, emotional grounding, and human connection.
+                    Toi Zoi emerged from the tension between wanting to stay private and the necessity of showing up online.
+                </p>
+
+                <div class="manifesto-box">
+                    <p><strong>The Manifesto:</strong></p>
+
+                    <p>
+                        If you are not visible on social media, it becomes easier to go unseen.
+                    </p>
+
+                    <p>
+                        And as time moves on, meeting new people doesn’t always happen the way it used to.
+                    </p>
+
+                    <p>
+                        So Toi Zoi exists as a small, playful answer to that.
+                    </p>
+
+                    <p>
+                        If the person you’re looking for doesn’t find you, maybe companionship can still find its way to you.
+                    </p>
+
+                    <p>
+                        <strong>There is a Toi Zoi for you.</strong>
+                    </p>
+
+                    <p>
+                        For many in the LGBTQ+ community, this feeling can be even more pronounced.
+                    </p>
+
+                    <p>
+                        So Toi Zoi reshapes it — into camp, colour, and a form of symbolic friendship.
+                    </p>
+                </div>
+
+                <p style="margin-top: 20px; font-style: italic; display: flex; align-items: center; gap: 8px;">
+                    <span>🎈</span>
+                    <span>“The first doll wears pyjamas because the idea came to me in bed — she wears my favourite ones.”</span>
+                </p>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="club" class="section-padding">
+        <div class="fun-club">
+            <div class="fun-club-card">
+                <h2>Join the Fun Club</h2>
+                <p>A glittering meeting place for people who are growing older and don’t always feel seen - a space to share stories, to speak, and to find companionship in being heard.</p>
+                <a href="https://instagram.com/joy.becomes.us" target="_blank" rel="noopener noreferrer" class="btn btn-main" style="padding: 20px 50px; font-size: 1.2rem;">
+                    Follow @joy.becomes.us
+                </a>
+
+                <p style="margin-top: 20px; margin-bottom: 0; font-weight: bold; color: var(--hot-pink);">
+                    DM me your story, your mood, or your idea - I’d love to create a toi zoi doll just for you.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>TOI ZOI &copy; 2026 | For grown-up kids, queer hearts, and late bloomers. 🌈</p>
+        <p class="footer-sub">Series 01 — Emotional Collectibles</p>
+    </footer>
+
+    <div id="modal" class="modal" onclick="closeModal(event)">
+        <span class="close" onclick="closeModal(event)">&times;</span>
+        <img id="modal-img" class="modal-content" src="" alt="Full view">
+    </div>
+
+    <script>
+        const collection = [
+            {
+                title: "Boi Zoi: Binge-Watching Edition",
+                text: "The first doll in the collection. A soft stay-at-home companion for cosy nights, comfort rituals, and not watching alone.",
+                sub: "Includes fluffy slippers and the sacred remote control.",
+                tag: "Homebody Drop",
+                img: "toi-boi-companion-for binge-watching.png",
+                badge: "On Sale"
+            },
+            {
+                title: "Toi Zoi & Friends",
+                text: "A celebration of chosen company and iconic presence.",
+                sub: "Featuring iconic Greek singer Gogo Tsampa and her album. Includes Gogo’s slippers, of course.",
+                tag: "Collector's Edition",
+                img: "toi zoi and Friends - Gwgw Tsampa.png",
+                badge: "Rare"
+            },
+            {
+                title: "Toi Zoi: Greek Easter Edition (comes with the Lambada Easter candle)",
+                text: "Easter household essential. Because Easter is incomplete without Gogo Tsampa and her Kagkelia signature song.",
+                sub: "Includes Karaoke Speaker accessory.",
+                tag: "Easter Drop",
+                img: "Labada - toi zoi and Friends - Gwgw Tsampa.png",
+                badge: "Limited"
+            },
+            {
+                title: "Soi Zoi: Village Series",
+                text: "Family (soi in Greek) edition. A loving tribute to roots and generational presence.",
+                sub: "Featuring Zoi’s mom & her aunt Vaggelio. Includes three Fredo Espressos. Dolls wear helper outfits for the Giorti Patatas — where everyone helps and no one leaves hungry.",
+                tag: "Family Series",
+                img: "soi zoi - Village Series.png",
+                badge: "Lasithi Vibes"
+            },
+            {
+                title: "Toy Boys: Pre-Pride",
+                text: "Drag king party edition. Camp transformation and pride energy.",
+                sub: "Actual music CD coming soon! Yes, CD.",
+                tag: "Pride Party",
+                img: "toy boys - Pre-Pride Party Edition.png",
+                badge: "Party Time"
+            },
+            {
+                title: "Toi Zoi: Erminio Edition",
+                text: "Zoi against the weather. Made for drama.",
+                sub: "Includes a black umbrella and a cappuccino to go.",
+                tag: "Storm-Era",
+                img: "toi zoi Erminio Edition.png",
+                badge: "All-Weather"
+            },
+            {
+                title: "Toi Zoi: Erminio Rainbow",
+                text: "Storm-proof, pride-proof, emotionally radiant.",
+                sub: "Because after every rain comes a rainbow.",
+                tag: "Rainbow Edition",
+                img: "toi boi - Erminio Rainbow Edition.png",
+                badge: "Ultra Rare"
+            },
+            {
+                title: "Toi Zoi: Pre-Pride Party",
+                text: "Restless joy and nighttime sparkle. The ultimate party mood.",
+                sub: "A special edition to accompany you on the dancefloor — because no one should arrive alone.",
+                tag: "Nightlife",
+                img: "toi zoi Pre-Pride Party Edition.png",
+                badge: "Glitter"
+            }
+        ];
+
+        const grid = document.getElementById('main-grid');
+
+        collection.forEach((item) => {
+            const safeTitle = item.title.replace(/'/g, "\\'");
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="sticker sticker-round">${item.badge}</div>
+                <div class="image-box" onclick="openModal('${item.img}', '${safeTitle}')">
+                    <img src="${item.img}" alt="${item.title}">
+                    <div class="sticker sticker-badge">${item.tag}</div>
+                </div>
+                <div class="card-info">
+                    <h3>${item.title}</h3>
+                    <p>${item.text}</p>
+                    <p><small><strong>Note:</strong> ${item.sub}</small></p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function openModal(src, altText = 'Full view') {
+            const modal = document.getElementById('modal');
+            const modalImg = document.getElementById('modal-img');
+
+            modal.style.display = 'flex';
+            modalImg.src = src;
+            modalImg.alt = altText;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(event) {
+            if (
+                !event ||
+                event.target.id === 'modal' ||
+                event.target.classList.contains('close')
+            ) {
+                document.getElementById('modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.getElementById('modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        const container = document.getElementById('sparkle-container');
+        for (let i = 0; i < 30; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            container.appendChild(star);
+        }
+    </script>
+</body>
+</html>
